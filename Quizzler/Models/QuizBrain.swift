@@ -30,7 +30,17 @@ struct QuizBrain {
                           correctAnswer: "Master Of Puppets"),
                  Question(text: "Какой материал использовал Джеймс Хэтфилд для создания гитары Карл",
                           answer: ["Из гаража", "Махагони из Амозонии", "Редкое красное дерево из Америки"],
-                          correctAnswer: "Из гаража")
+                          correctAnswer: "Из гаража"),
+                 Question(text: "С какой певицей выступали Metallica на премии Грэмми",
+                          answer: ["Эми Уайнхаус", "Лили Ален", "Леди Гага"],
+                          correctAnswer: "Леди Гага"),
+                 Question(text: "В каком городе зародилась Metallica",
+                          answer: ["Сан-Франциско", "Детроит", "Лос-Анджелес"],
+                          correctAnswer: "Лос-Анджелес"),
+                 Question(text: "С каким продюссером группа записал одноименный альбом Metallica (Balck)",
+                          answer: ["Боб Рок", "Флеминг Расмуссен", "Рик Рубин"],
+                          correctAnswer: "Боб Рок")
+                 
     ]
     
     var questionNumber = 0
@@ -43,10 +53,6 @@ struct QuizBrain {
         } else {
             return false
         }
-    }
-    
-    func getScore() -> Int {
-        return score
     }
     
     func getQuestionText() -> String {
@@ -68,15 +74,5 @@ struct QuizBrain {
     func getProgress() -> Float {
         let progress = Float(questionNumber + 1) / Float(quiz.count)
         return progress
-    }
-    
-    mutating func nextQuestion() {
-        if questionNumber + 1 < quiz.count {
-            questionNumber += 1
-        } else {
-            questionNumber = 0
-            score = 0
-
-        }
     }
 }

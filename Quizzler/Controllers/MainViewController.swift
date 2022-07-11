@@ -67,7 +67,6 @@ class MainViewController: UIViewController {
     private let scoreLabel: UILabel = {
        let label = UILabel()
         label.textColor = .white
-        label.text = "Score: "
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -115,15 +114,23 @@ class MainViewController: UIViewController {
         } else {
             sender.shake()
         }
-        
-        quizBrain.nextQuestion()
-        scoreLabel.text = "Правильные ответы: \(quizBrain.getScore())"
 
         Timer.scheduledTimer(timeInterval: 0.2,
                              target: self,
                              selector: #selector(updateUI),
                              userInfo: nil,
                              repeats: false)
+        
+        if quizBrain.questionNumber + 1 < quizBrain.quiz.count {
+            quizBrain.questionNumber += 1
+        } else {
+            let resultVC = ResultViewController()
+            resultVC.score = quizBrain.score
+            resultVC.modalPresentationStyle = .fullScreen
+            present(resultVC, animated: true)
+            quizBrain.questionNumber = 0
+            quizBrain.score = 0
+        }
     }
     
     @objc private func updateUI() {
@@ -132,7 +139,6 @@ class MainViewController: UIViewController {
         secondButton.setTitle(quizBrain.getSecondButtonText(), for: .normal)
         thirdButton.setTitle(quizBrain.getThirdButtonText(), for: .normal)
         progressBar.progress = quizBrain.getProgress()
-        scoreLabel.text = "Правильные ответы: \(quizBrain.getScore())"
         firstButton.backgroundColor = .clear
         secondButton.backgroundColor = .clear
     }
